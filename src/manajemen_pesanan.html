@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Pesanan | Admin</title>
+  </head>
+
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto max-w-7xl">
+              <!-- Breadcrumb Start -->
+              <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h2 class="text-title-md2 font-bold text-black dark:text-gray">
+                  Manajemen Pesanan
+                </h2>
+              </div>
+              <!-- Breadcrumb End -->
+              
+              <!-- Filter Section Start -->
+              <div class="mb-6">
+                <label for="filterStatus" class="block mb-2 font-medium text-black dark:text-white">Filter Status Pembayaran:</label>
+                <select id="filterStatus" class="border border-gray-300 rounded-md p-2 text-black" onchange="filterPesanan()">
+                  <option value="all">Semua</option>
+                  <option value="menunggu">Menunggu</option>
+                  <option value="diproses">Proses</option>
+                  <option value="dikirim">Kirim</option>
+                  <option value="selesai">Selesai</option>
+                  <option value="tolak">Tolak</option>
+                </select>
+              </div>
+
+              <!-- Pesanan Sekarang Table Start -->
+              <h2 class="text-xl font-semibold mb-2 text-black dark:text-white">List Pesanan Sekarang</h2>
+              <table id="pesananSekarangTable" class="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-black">
+                <thead class="bg-gray-200">
+                  <tr>
+                    <th class="py-2 px-4 border text-black">Nama Pemesan</th>
+                    <th class="py-2 px-4 border text-black">Alamat</th>
+                    <th class="py-2 px-4 border text-black">Menu Dipesan</th>
+                    <th class="py-2 px-4 border text-black">Total</th>
+                    <th class="py-2 px-4 border text-black">Status</th>
+                    <th class="py-2 px-4 border text-black">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <!-- JavaScript Section -->
+              <script>
+                const pesananSekarang = [
+                  { id: 1, nama: "Siti", alamat: "Jl. Melati 2", menu: "Ayam Bakar", total: "Rp 25.000", status: "menunggu" },
+                  { id: 2, nama: "Budi", alamat: "Jl. Mawar 1", menu: "Nasi Goreng", total: "Rp 20.000", status: "menunggu" },
+                  { id: 3, nama: "Rakha", alamat: "Jl. Raya", menu: "Ketoprak", total: "Rp 15.000", status: "menunggu" }
+                ];
+
+                function renderPesananSekarang() {
+                  const tableBody = document.getElementById("pesananSekarangTable").querySelector("tbody");
+                  tableBody.innerHTML = "";
+                  pesananSekarang.forEach(pesanan => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                      <td class="py-2 px-4 border">${pesanan.nama}</td>
+                      <td class="py-2 px-4 border">${pesanan.alamat}</td>
+                      <td class="py-2 px-4 border">${pesanan.menu}</td>
+                      <td class="py-2 px-4 border">${pesanan.total}</td>
+                      <td class="py-2 px-4 border">${pesanan.status}</td>
+                      <td class="py-2 px-4 border">
+                        <button onclick="updateStatus(${pesanan.id}, 'diproses')" class="bg-yellow-500 text-white rounded px-2 py-1 hover:bg-yellow-600">Proses</button>
+                        <button onclick="updateStatus(${pesanan.id}, 'dikirim')" class="bg-blue-500 text-white rounded px-2 py-1 hover:bg-blue-600">Kirim</button>
+                        <button onclick="updateStatus(${pesanan.id}, 'selesai')" class="bg-green-500 text-white rounded px-2 py-1 hover:bg-green-600">Selesai</button>
+                        <button onclick="updateStatus(${pesanan.id}, 'tolak')" class="bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Tolak</button>
+                      </td>`;
+                    tableBody.appendChild(row);
+                  });
+                }
+
+                function filterPesanan() {
+                  const filterValue = document.getElementById("filterStatus").value;
+                  const filteredPesanan = filterValue === "all" ? pesananSekarang : pesananSekarang.filter(p => p.status === filterValue);
+                  const tableBody = document.getElementById("pesananSekarangTable").querySelector("tbody");
+                  tableBody.innerHTML = "";
+                  filteredPesanan.forEach(pesanan => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                      <td class="py-2 px-4 border">${pesanan.nama}</td>
+                      <td class="py-2 px-4 border">${pesanan.alamat}</td>
+                      <td class="py-2 px-4 border">${pesanan.menu}</td>
+                      <td class="py-2 px-4 border">${pesanan.total}</td>
+                      <td class="py-2 px-4 border">${pesanan.status}</td>
+                      <td class="py-2 px-4 border">
+                        <button onclick="updateStatus(${pesanan.id}, 'diproses')" class="bg-yellow-500 text-white rounded px-2 py-1 hover:bg-yellow-600">Proses</button>
+                        <button onclick="updateStatus(${pesanan.id}, 'dikirim')" class="bg-blue-500 text-white rounded px-2 py-1 hover:bg-blue-600">Kirim</button>
+                        <button onclick="updateStatus(${pesanan.id}, 'selesai')" class="bg-green-500 text-white rounded px-2 py-1 hover:bg-green-600">Selesai</button>
+                        <button onclick="updateStatus(${pesanan.id}, 'tolak')" class="bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Tolak</button>
+                      </td>`;
+                    tableBody.appendChild(row);
+                  });
+                }
+
+                function updateStatus(id, status) {
+                  const pesanan = pesananSekarang.find(p => p.id === id);
+                  if (pesanan) {
+                    pesanan.status = status;
+                    renderPesananSekarang();
+                  }
+                }
+
+                // Initial Render
+                renderPesananSekarang();
+                renderHistoryPesanan();
+              </script>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

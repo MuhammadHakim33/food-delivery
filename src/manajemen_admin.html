@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Informasi Admin</title>
+    <script>
+        function clearInputFields() {
+            // Get all input elements in the form
+            const inputs = document.querySelectorAll('form input');
+            // Loop through each input and clear its value
+            inputs.forEach(input => {
+                input.value = '';
+            });
+        }
+    </script>
+  </head>
+
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto max-w-7xl">
+              <!-- Breadcrumb Start -->
+              <div
+                class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                    Informasi Admin
+                </h2>
+
+              </div>
+              <!-- Breadcrumb End -->
+              <!-- RESPONSIVE START -->
+              <div class="flex flex-col">
+                <div class="-m-1.5 overflow-x-auto">
+                  <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div class="overflow-hidden">
+                      <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+              <!-- INFORMASI ADMIN START -->
+              <!-- Profile Picture -->
+              <div class="flex justify-center">
+                <img class="h-24 w-24 rounded-full border" src="./images/user/user-01.png" alt="Admin Profile Picture">
+            </div>
+
+            <div class="text-center">
+                <p class="text-black dark:text-white">Manage your account information</p>
+            </div>
+
+            <!-- FORM START -->
+            <form class="space-y-4">
+                <!-- Full Name -->
+                <div>
+                    <label class="mt-3 block text-sm font-medium text-black dark:text-white">Nama Lengkap</label>
+                    <input type="text" placeholder="Enter Full Name" class="mt-1 block w-full h-10 rounded-md text-black dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50" value=" Admin">
+                </div>
+
+                <!-- Email Address -->
+                <div>
+                  <label class="mt-3 block text-sm font-medium text-black dark:text-white">Alamat Email</label>
+                  <input type="text" placeholder="Enter Email Address" class="mt-1 block w-full h-10 rounded-md text-black dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50" value=" admin@gmail.com">
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                  <label class="mt-3 block text-sm font-medium text-black dark:text-white">Nomor HP</label>
+                  <input type="text" placeholder="Enter Phone Number" class="mt-1 block w-full h-10 rounded-md text-black dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50" value=" +6281234567890">
+                </div>
+
+                <!-- Change Password -->
+                <div>
+                  <label class="mt-3 block text-sm font-medium text-black dark:text-white">Masukkan Password Baru</label>
+                  <input type="text" placeholder="Enter New Password" class="mt-1 block w-full h-10 rounded-md text-black dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50" value=" **********">
+                    <p class="text-xs text-red-500 mt-1">*Password must be different from the previous password.</p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-between mt-4">
+                    <button type="button" onclick="clearInputFields()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md shadow hover:bg-gray-400">
+                        Edit
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+            <!-- FORM END -->
+            <!-- INFORMASI ADMIN END -->
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- RESPONSIVE END -->
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+  </body>
+</html>

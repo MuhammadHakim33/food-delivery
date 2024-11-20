@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informasi Restoran | Admin</title>
+  </head>
+
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto max-w-7xl">
+              <!-- Breadcrumb Start -->
+              <div
+                class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                  Update Informasi Restoran
+                </h2>
+
+              </div>
+              <!-- Breadcrumb End -->
+            <!-- RESPONSIVE START -->
+            <div class="flex flex-col">
+              <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                  <div class="overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+            <!-- INFORMASI RESTORAN START -->
+            <!-- Success Message -->
+            <div id="successMessage" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+              <p>Changes saved successfully!</p>
+              </div>
+      
+              <form id="updateForm">
+              <div class="mb-4">
+                  <label for="restaurantName" class="block text-black dark:text-white font-semibold mb-2">Nama Restoran</label>
+                  <input type="text" id="restaurantName" name="restaurantName" placeholder="Type here" class="w-full p-3 border text-black dark:text-white rounded-lg focus:outline-none focus:ring-blue-500" value="Rumah Makan Selera Panca">
+              </div>
+      
+              <div class="mb-4">
+                  <label for="address" class="block text-black dark:text-white font-semibold mb-2">Alamat Restoran</label>
+                  <textarea id="address" name="address" placeholder="Type here" rows="3" class="w-full p-3 border text-black dark:text-white rounded-lg focus:outline-none focus:ring-blue-500">Jl. Kebagusan Raya No. 77</textarea>
+              </div>
+      
+              <div class="mb-4">
+                  <label for="hours" class="block text-black dark:text-white font-semibold mb-2">Jam Operasional</label>
+                  <input type="text" id="hours" name="hours" placeholder="e.g., 10:00 AM - 10:00 PM" class="w-full p-3 border text-black dark:text-white rounded-lg focus:outline-none focus:ring-blue-500" value="08:00-22:00 WIB">
+              </div>
+
+              <div class="mb-4">
+                <label for="address" class="block text-black dark:text-white font-semibold mb-2">Deskripsi Restoran</label>
+                <textarea id="address" name="address" placeholder="Type here" rows="3" class="w-full p-3 border text-black dark:text-white rounded-lg focus:outline-none focus:ring-blue-500">Kami tidak pernah meragukan tamu, meski permintaannya aneh-aneh.</textarea>
+            </div>
+      
+              <!-- Tombol simpan perubahan -->
+              <div class="mt-6">
+                  <button type="button" onclick="saveChanges()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-200">Save Changes</button>
+              </div>
+              </form>
+          <!-- </div> -->
+      
+          <script>
+              function saveChanges() {
+              document.getElementById('successMessage').classList.remove('hidden');
+              document.getElementById('updateForm').reset();
+              setTimeout(() => {
+                  document.getElementById('successMessage').classList.add('hidden');
+              }, 3000);
+              }
+          </script>
+        <!-- INFORMASI RESTORAN END -->
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- RESPONSIVE END -->
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+  </body>
+</html>

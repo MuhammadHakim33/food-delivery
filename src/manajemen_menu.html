@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Menu | Admin</title>
+  </head>
+
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto max-w-7xl">
+            <!-- Breadcrumb Start -->
+            <div
+            class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <h2 class="text-title-md2 font-bold text-black dark:text-white">
+              Manajemen Menu
+            </h2>
+
+          </div>
+          <!-- Breadcrumb End -->
+          <!-- RESPONSIVE START -->
+          <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+              <div class="p-1.5 min-w-full inline-block align-middle">
+                <div class="overflow-hidden">
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                    
+                    <!-- Form Tambah Menu Start -->
+                    <h2 class="text-xl font-semibold mb-4 text-black dark:text-white">Tambah Menu</h2>
+                    <div class="mb-4">
+                      <form action="#">
+                        <div class="mb-4">
+                          <label for="gambar" class="block font-medium mb-1 text-black dark:text-white">Input Foto Menu</label>
+                          <input
+                            type="file"
+                            id="gambar"
+                            accept="image/*"
+                            onchange="previewImage(event)"
+                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+                          />
+                          <img id="preview" src="#" alt="Preview" class="mt-2 w-32 h-32 hidden"/>
+                        </div>
+          
+                        <div class="mb-4">
+                          <label for="nama" class="block font-medium mb-1 text-black dark:text-white">Nama Menu:</label>
+                          <input type="text" id="nama" class="w-full p-2 border border-gray-300 rounded">
+                        </div>
+                        <div class="mb-4">
+                          <label for="deskripsi" class="block font-medium mb-1 text-black dark:text-white">Deskripsi:</label>
+                          <textarea id="deskripsi" class="w-full p-2 border border-gray-300 rounded"></textarea>
+                        </div>
+                        <div class="mb-4">
+                          <label for="harga" class="block font-medium mb-1 text-black dark:text-white">Harga:</label>
+                          <input type="number" id="harga" class="w-full p-2 border border-gray-300 rounded">
+                        </div>
+                        <div class="mb-4">
+                          <label for="stok" class="block font-medium mb-1 text-black dark:text-white">Stok Tersedia:</label>
+                          <input type="number" id="stok" class="w-full p-2 border border-gray-300 rounded">
+                        </div>
+          
+                        <button onclick="tambahMenu()" type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tambah Menu</button>
+                      </form>
+                    </div>
+                    <!-- Form Tambah Menu End -->
+          
+                    <!-- Daftar Menu Start -->
+                    <h2 class="mt-7 text-xl font-semibold mb-4 text-black dark:text-white">Daftar Menu</h2>
+                    <table class="w-full bg-white rounded shadow-md">
+                      <thead>
+                        <tr class="bg-gray-200">
+                          <th class="p-2 border text-black">Gambar</th>
+                          <th class="p-2 border text-black">Nama Menu</th>
+                          <th class="p-2 border text-black">Deskripsi</th>
+                          <th class="p-2 border text-black">Harga</th>
+                          <th class="p-2 border text-black">Stok Tersedia</th>
+                          <th class="p-2 border text-black">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody id="menuTable"></tbody>
+                    </table>
+                    <!-- Daftar Menu End -->
+                  </div>
+                </div>
+              </main>
+          
+              <script>
+                let menuList = [];
+          
+                function previewImage(event) {
+                  const preview = document.getElementById('preview');
+                  preview.src = URL.createObjectURL(event.target.files[0]);
+                  preview.classList.remove('hidden');
+                }
+          
+                function tambahMenu() {
+                  const nama = document.getElementById('nama').value;
+                  const deskripsi = document.getElementById('deskripsi').value;
+                  const harga = document.getElementById('harga').value;
+                  const stok = document.getElementById('stok').value;
+                  const gambar = document.getElementById('gambar').files[0];
+          
+                  if (!nama || !deskripsi || !harga || !stok || !gambar) {
+                    alert("Semua field harus diisi.");
+                    return;
+                  }
+          
+                  const menu = {
+                    id: menuList.length + 1,
+                    nama: nama,
+                    deskripsi: deskripsi,
+                    harga: harga,
+                    stok: stok,
+                    gambar: URL.createObjectURL(gambar)
+                  };
+          
+                  menuList.push(menu);
+                  renderMenu();
+                  clearForm();
+                }
+          
+                function renderMenu() {
+                  const tableBody = document.getElementById('menuTable');
+                  tableBody.innerHTML = '';
+          
+                  menuList.forEach(menu => {
+                    const row = tableBody.insertRow();
+                    row.innerHTML = `
+                      <td class="p-2 border"><img src="${menu.gambar}" alt="${menu.nama}" class="w-12 h-12"></td>
+                      <td class="p-2 border">${menu.nama}</td>
+                      <td class="p-2 border">${menu.deskripsi}</td>
+                      <td class="p-2 border">${menu.harga}</td>
+                      <td class="p-2 border">${menu.stok}</td>
+                      <td class="p-2 border">
+                        <button onclick="editMenu(${menu.id})" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2">Edit</button>
+                        <button onclick="hapusMenu(${menu.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Hapus</button>
+                      </td>
+                    `;
+                  });
+                }
+          
+                function clearForm() {
+                  document.getElementById('nama').value = '';
+                  document.getElementById('deskripsi').value = '';
+                  document.getElementById('harga').value = '';
+                  document.getElementById('stok').value = '';
+                  document.getElementById('gambar').value = '';
+                  document.getElementById('preview').classList.add('hidden');
+                }
+          
+                function hapusMenu(id) {
+                  menuList = menuList.filter(menu => menu.id !== id);
+                  renderMenu();
+                }
+          
+                function editMenu(id) {
+                  const menu = menuList.find(menu => menu.id === id);
+                  if (!menu) return;
+          
+                  document.getElementById('nama').value = menu.nama;
+                  document.getElementById('deskripsi').value = menu.deskripsi;
+                  document.getElementById('harga').value = menu.harga;
+                  document.getElementById('stok').value = menu.stok;
+                  document.getElementById('preview').src = menu.gambar;
+                  document.getElementById('preview').classList.remove('hidden');
+          
+                  hapusMenu(id);
+                }
+              </script>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- RESPONSIVE END -->
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+  </body>
+</html>

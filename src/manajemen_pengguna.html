@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Pengguna | Admin</title>
+  </head>
+
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto max-w-7xl">
+              <!-- Breadcrumb Start -->
+              <div
+                class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                  Manajemen Pengguna
+                </h2>
+
+              </div>
+              <!-- Breadcrumb End -->
+          <!-- RESPONSIVE START -->
+          <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+              <div class="p-1.5 min-w-full inline-block align-middle">
+                <div class="overflow-hidden">
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+          <!-- MANAJEMEN PENGGUNA START -->
+          <h2 class="text-xl font-semibold mt-8 mb-2 text-black dark:text-white">Daftar Pengguna Aktif</h2>
+          <table id="userTable" class="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg text-black">
+              <thead class="bg-gray-200">
+                  <tr>
+                      <th class="py-2 px-4 border">Nama</th>
+                      <th class="py-2 px-4 border">Email</th>
+                      <th class="py-2 px-4 border">Alamat</th>
+                      <th class="py-2 px-4 border">Total Pesanan</th>
+                      <th class="py-2 px-4 border">Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+              </tbody>
+          </table>
+
+          <script>
+              const users = [
+                  { id: 1, nama: "Budiono Siregar", email: "budi@gmail.com", alamat: "Jl. Anggrek No. 1", totalPesanan: 5 },
+                  { id: 2, nama: "Leonie", email: "siti@gmail.com", alamat: "Jl. Melati No. 2", totalPesanan: 3 },
+                  { id: 3, nama: "Pingi", email: "pingi@gmail.com", alamat: "Jl. Mawar No. 3", totalPesanan: 8 },
+                  { id: 4, nama: "Dewi", email: "dewi@gmail.com", alamat: "Jl. Kamboja No. 4", totalPesanan: 2 }
+              ];
+
+              const blockedUsers = [];
+
+              function renderUsers() {
+                  const tableBody = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+                  tableBody.innerHTML = '';
+
+                  users.forEach(user => {
+                      const row = tableBody.insertRow();
+                      row.innerHTML = `
+                          <td class="py-2 px-4 border">${user.nama}</td>
+                          <td class="py-2 px-4 border">${user.email}</td>
+                          <td class="py-2 px-4 border">${user.alamat}</td>
+                          <td class="py-2 px-4 border">${user.totalPesanan}</td>
+                          <td class="py-2 px-4 border">
+                              <button class="btn btn-delete bg-red-600 text-white rounded px-2 py-1 hover:bg-red-700" onclick="deleteUser(${user.id})">Hapus</button>
+                              <button class="btn btn-block bg-yellow-500 text-white rounded px-2 py-1 hover:bg-yellow-600" onclick="blockUser(${user.id})">Blokir</button>
+                          </td>
+                      `;
+                  });
+              }
+
+              function renderBlockedUsers() {
+                  const tableBody = document.getElementById('blockedUserTable').getElementsByTagName('tbody')[0];
+                  tableBody.innerHTML = '';
+
+                  blockedUsers.forEach(user => {
+                      const row = tableBody.insertRow();
+                      row.innerHTML = `
+                          <td class="py-2 px-4 border">${user.nama}</td>
+                          <td class="py-2 px-4 border">${user.email}</td>
+                          <td class="py-2 px-4 border">${user.alamat}</td>
+                          <td class="py-2 px-4 border">${user.totalPesanan}</td>
+                          <td class="py-2 px-4 border">
+                              <button class="btn btn-delete bg-red-600 text-white rounded px-2 py-1 hover:bg-red-700" onclick="deleteBlockedUser(${user.id})">Hapus</button>
+                          </td>
+                      `;
+                  });
+              }
+
+              function deleteUser(id) {
+                  const userIndex = users.findIndex(user => user.id === id);
+                  if (userIndex > -1) {
+                      if (confirm(`Apakah Anda yakin ingin menghapus pengguna ${users[userIndex].nama}?`)) {
+                          users.splice(userIndex, 1);
+                          renderUsers();
+                          alert("Pengguna berhasil dihapus.");
+                      }
+                  }
+              }
+
+              function deleteBlockedUser(id) {
+                  const userIndex = blockedUsers.findIndex(user => user.id === id);
+                  if (userIndex > -1) {
+                      if (confirm(`Apakah Anda yakin ingin menghapus pengguna ${blockedUsers[userIndex].nama} dari daftar blokir?`)) {
+                          blockedUsers.splice(userIndex, 1);
+                          renderBlockedUsers();
+                          alert("Pengguna yang diblokir berhasil dihapus.");
+                      }
+                  }
+              }
+
+              function blockUser(id) {
+                  const userIndex = users.findIndex(user => user.id === id);
+                  if (userIndex > -1) {
+                      if (confirm(`Apakah Anda yakin ingin memblokir pengguna ${users[userIndex].nama}?`)) {
+                          const user = users.splice(userIndex, 1)[0];
+                          blockedUsers.push(user);
+                          renderUsers();
+                          renderBlockedUsers();
+                          alert(`Pengguna ${user.nama} telah diblokir.`);
+                      }
+                  }
+              }
+
+              // Initialize
+              renderUsers();
+              renderBlockedUsers();
+          </script>
+          <!-- MANAJEMEN PENGGUNA END -->
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- RESPONSIVE END -->
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+  </body>
+</html>
