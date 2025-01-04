@@ -37,10 +37,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/login', [AdminController::class, 'showLoginFormAdmin'])->name('loginAdmin');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('loginAdmin');
 Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
-Route::get('/admin/menu', [AdminController::class, 'AdminDashboard'])->name('admin.menu');
-Route::get('/admin/pesanan', [AdminController::class, 'AdminDashboard'])->name('admin.pesanan');
-Route::get('/admin/pengguna', [AdminController::class, 'AdminDashboard'])->name('admin.pengguna');
-Route::get('/admin/info', [AdminController::class, 'AdminDashboard'])->name('admin.info');
+Route::get('/admin/menu', [AdminController::class, 'ManajemenMenu'])->name('admin.menu');
+Route::get('/admin/pesanan', [AdminController::class, 'ManajemenPesanan'])->name('admin.pesanan');
+Route::get('/admin/pengguna', [AdminController::class, 'ManajemenPengguna'])->name('admin.pengguna');
+Route::get('/admin/info', [AdminController::class, 'Informasi'])->name('admin.info');
 Route::get('/admin/register', [AdminController::class, 'showRegistrationFormAdmin'])->name('registerAdmin');
 Route::post('/admin/register', [AdminController::class, 'showRegistrationFormAdmin'])->name('registerAdmin');
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('login');
