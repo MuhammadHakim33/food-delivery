@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Menu;
+use App\Models\Order;
 
 // use Illuminate\Support\Facades\Session;
 
@@ -60,6 +61,7 @@ class AdminController extends Controller
             ->withErrors(['email' => 'Email atau password salah.'])
             ->withInput($request->only('email'));
     }
+    
 
     public function showRegistrationFormAdmin()
     {
@@ -84,6 +86,12 @@ class AdminController extends Controller
             'foods' => $foods,
             'drinks' => $drinks,
         ]);
+    }
+
+    public function ManajemenPesanan()
+    {
+        $orders = Order::with('user', 'delivery')->get();
+        return view('admin.pesanan', ['orders' => $orders]);
     }
 
     public function logout()

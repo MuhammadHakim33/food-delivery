@@ -145,10 +145,11 @@
               </tr>
             </thead>
             <tbody>
+              @foreach($orders as $order)
               <tr>
-                <td>#0001</td>
-                <td>Mamat Hidayat</td>
-                <td><span class="status waiting">Waiting</span></td>
+                <td>{{$order->id}}</td>
+                <td>{{$order->user->name}}</td>
+                <td><span class="status waiting">{{$order->delivery->status}}</span></td>
                 <td class="action">
                   <button class="btn-process" onclick="updateStatus(this, 'processed')">Proses</button>
                   <button class="btn-ship" onclick="updateStatus(this, 'shipped')">Kirim</button>
@@ -156,39 +157,7 @@
                   <button class="btn-reject" onclick="updateStatus(this, 'rejected')">Tolak</button>
                 </td>
               </tr>
-              <tr>
-                <td>#0002</td>
-                <td>Teguh Santoso</td>
-                <td><span class="status waiting">Waiting</span></td>
-                <td class="action">
-                  <button class="btn-process" onclick="updateStatus(this, 'processed')">Proses</button>
-                  <button class="btn-ship" onclick="updateStatus(this, 'shipped')">Kirim</button>
-                  <button class="btn-complete" onclick="updateStatus(this, 'completed')">Selesai</button>
-                  <button class="btn-reject" onclick="updateStatus(this, 'rejected')">Tolak</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#0003</td>
-                <td>Dewi Sari</td>
-                <td><span class="status waiting">Waiting</span></td>
-                <td class="action">
-                  <button class="btn-process" onclick="updateStatus(this, 'processed')">Proses</button>
-                  <button class="btn-ship" onclick="updateStatus(this, 'shipped')">Kirim</button>
-                  <button class="btn-complete" onclick="updateStatus(this, 'completed')">Selesai</button>
-                  <button class="btn-reject" onclick="updateStatus(this, 'rejected')">Tolak</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#0004</td>
-                <td>Bagas Putra</td>
-                <td><span class="status waiting">Waiting</span></td>
-                <td class="action">
-                  <button class="btn-process" onclick="updateStatus(this, 'processed')">Proses</button>
-                  <button class="btn-ship" onclick="updateStatus(this, 'shipped')">Kirim</button>
-                  <button class="btn-complete" onclick="updateStatus(this, 'completed')">Selesai</button>
-                  <button class="btn-reject" onclick="updateStatus(this, 'rejected')">Tolak</button>
-                </td>
-              </tr>
+              @endforeach
               
             </tbody>
           </table>
