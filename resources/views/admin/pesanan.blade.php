@@ -1,9 +1,4 @@
 <x-admin-layout>
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Pesanan</title>
     <style>
       body {
@@ -24,12 +19,12 @@
           border-bottom: 1px solid #e5e7eb;
       }
 
-      .header {
+      /* .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-      }
+      } */
 
       .header h3 {
         font-size: 24px;
@@ -137,9 +132,9 @@
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        <h3>Manajemen Pesanan</h3>
-      </div>
+      <h2 class="text-gray-700 text-3xl font-medium font-bold">Manajemen Pesanan</h2>
+      {{-- <div class="header">
+      </div> --}}
       <div class="table-container">
         <table>
           <thead>

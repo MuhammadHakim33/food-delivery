@@ -11,7 +11,7 @@
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">Deskripsi</th>
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">Harga</th>
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Tambah Menu</a>
+                                <a href="{{url('/admin/addMenu')}}" class="text-indigo-600 hover:text-indigo-900">Tambah Menu</a>
                             </th>
                         </tr>
                     </thead>
