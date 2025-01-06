@@ -29,9 +29,9 @@
 3. Create new database in your local
 4. Duplicate the `.env.example` file then rename it to `.env`
 5. Set the mysql db connection in the .env file
-6. Run migration
+6. Run migration & seeder
     ```sh
-    php artisan migrate
+    php artisan migrate --seed
     ```
 7. Run the app
     ```sh

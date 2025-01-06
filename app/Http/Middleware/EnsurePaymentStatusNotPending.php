@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
-class EnsureCartFilled
+class EnsurePaymentStatusNotPending
 {
     /**
      * Handle an incoming request.
@@ -16,9 +15,7 @@ class EnsureCartFilled
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $cart = Cart::instance(auth()->user()->email);
-
-        if($cart->count() == 0) {
+        if($request->route('order')->status != 'pending') {
             abort(404, 'Page not found');
         }
 

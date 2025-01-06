@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Menu;
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +15,20 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->char('id', 255)->primary();
-            $table->unsignedBigInteger('id_user');
+            $table->foreignId('user_id')->constrained('users');
+            $table->integer('total');
             $table->enum('status', ['failed', 'pending', 'success'])->default('pending');
+            $table->char('snap_token')->nullable();
             $table->timestamps();
+        });
 
-            $table->foreign('id_user')->references('id')->on('users');
+        Schema::create('item_order', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(Menu::class);
+            $table->integer('qty');
+            $table->integer('price');
+            $table->timestamps();
         });
     }
 
@@ -27,5 +38,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('orders');
+        Schema::dropIfExists('item_order');
     }
 };

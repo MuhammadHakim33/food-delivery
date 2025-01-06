@@ -52,18 +52,18 @@
                     <div>
                         <label class="inline-flex items-center">
                             <input type="checkbox" name="remember" class="form-checkbox text-indigo-600">
-                            <span class="mx-2 text-gray-600 text-sm">Remember me</span>
+                            <span class="mx-2 text-gray-600 text-sm">Ingat Saya</span>
                         </label>
                     </div>
 
                     <div>
-                        <a class="block text-sm font-medium text-indigo-700 hover:underline" href="#">Forgot your password?</a>
+                        <a class="block text-sm font-medium text-indigo-700 hover:underline" href="#">Lupa Password?</a>
                     </div>
                 </div>
 
                 <div class="mt-6">
                     <button type="submit" class="py-2 px-4 text-center bg-indigo-600 rounded-md w-full text-white text-sm hover:bg-indigo-500">
-                        Sign in
+                        Masuk
                     </button>
                 </div>
             </form>

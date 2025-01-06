@@ -29,10 +29,46 @@
       <form method="POST" action="{{ route('password.email') }}">
             @csrf
             <div class="relative mb-3">
-                <input type="email" name="email" id="email" class="peer p-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:focus:ring-neutral-600" placeholder="you@email.com" required>
-                <label for="email" class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0] peer-focus:scale-90 peer-focus:-translate-y-1.5 text-gray-500">Email</label>
+                <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="peer p-4 block w-full bg-gray-100 border border-gray-300 rounded-lg text-sm placeholder:text-transparent focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-neutral-700 dark:text-neutral-800 dark:focus:ring-neutral-600
+                focus:pt-6
+                focus:pb-2
+                [&:not(:placeholder-shown)]:pt-6
+                [&:not(:placeholder-shown)]:pb-2
+                autofill:pt-6
+                autofill:pb-2" placeholder="you@email.com"
+                value="{{ old('email') }}" 
+                required autofocus>
+                <label 
+                for="email" 
+                :value="__('Email')"
+                class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] dark:text-black peer-disabled:opacity-50 peer-disabled:pointer-events-none
+                peer-focus:scale-90
+                peer-focus:translate-x-0.5
+                peer-focus:-translate-y-1.5
+                peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+                peer-[:not(:placeholder-shown)]:scale-90
+                peer-[:not(:placeholder-shown)]:translate-x-0.5
+                peer-[:not(:placeholder-shown)]:-translate-y-1.5
+                peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-800 dark:text-neutral-500">Email</label>
             </div>
-            <button type="submit" class="mt-6 py-3 w-full inline-flex items-center justify-center text-sm font-medium rounded-lg bg-green-300 text-gray-500 mb-5">
+
+            @if (session('status'))
+                <div class="text-green-500 text-sm mt-4">
+                    {{ session('status') }} <!-- Pesan sukses dari Laravel -->
+                </div>
+            @endif
+
+            @if ($errors->has('email'))
+                <div class="text-red-500 text-sm mt-4">
+                    Email tidak ditemukan atau format email salah.
+                </div>
+            @endif
+
+            <button type="submit" class="mt-6 py-3 w-full inline-flex items-center justify-center text-sm font-medium rounded-lg bg-green-500 text-gray-500 mb-5">
                 Kirim Link Reset
             </button>
         </form>

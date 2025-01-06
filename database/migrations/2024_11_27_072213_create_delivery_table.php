@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,13 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('delivery', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->char('id_order', 255);
+            $table->foreignIdFor(Order::class);
             $table->enum('status', ['pending', 'process', 'shipped', 'delivered', 'failed'])->default('pending');
             $table->timestamps();
+        });
 
-            $table->foreign('id_order')->references('id')->on('orders');
+        Schema::create('delivery_address', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUlid('delivery_id')->constrained('deliveries');
+            $table->string('kecamatan', 255)->nullable();
+            $table->string('kelurahan', 255)->nullable();
+            $table->text('detail')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,5 +35,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('delivery');
+        Schema::dropIfExists('delivery_address');
     }
 };

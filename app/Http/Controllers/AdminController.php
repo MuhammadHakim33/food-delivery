@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Menu;
+
 // use Illuminate\Support\Facades\Session;
 
 // class AdminController extends Controller
@@ -61,7 +63,7 @@ class AdminController extends Controller
 
     public function showRegistrationFormAdmin()
     {
-        return view('admin.signup');
+        return view('admin.register');
     }
 
     public function AdminDashboard()
@@ -69,20 +71,19 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function ManajemenMenu(){
-        return view('admin.menu');
-    }
+    public function ManajemenMenu()
+    {
+        $foods = Menu::where('status', 'available')
+            ->where('category', 'food')
+            ->get();
+        $drinks = Menu::where('status', 'available')
+            ->where('category', 'drink')
+            ->get();
 
-    public function ManajemenPesanan(){
-        return view('admin.pesanan');
-    }
-
-    public function ManajemenPengguna(){
-        return view('admin.pengguna');
-    }
-
-    public function Informasi(){
-        return view('admin.info');
+        return view('admin.menu', [
+            'foods' => $foods,
+            'drinks' => $drinks,
+        ]);
     }
 
     public function logout()

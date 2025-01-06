@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Address;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,9 +34,6 @@ class RegisteredUserController extends Controller
             'no_telp' => ['required', 'string', 'max:15'],
             'email_regis' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password_regis' => ['required', 'string', 'min:8'],
-            'alamat' => ['required', 'string', 'max:255'],
-            'kecamatan' => ['required', 'string', 'max:255'],
-            'kelurahan' => ['required', 'string', 'max:255'],
         ]);
 
         $user = User::create([
@@ -46,13 +42,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password_regis),
             'phone' => $request->no_telp,
             'role' => 'user',
-        ]);
-
-        $user_address = Address::create([
-            'id_user' => $user->id,
-            'detail' => $request->alamat,
-            'kecamatan' => $request->kecamatan,
-            'kelurahan' => $request->kelurahan,
         ]);
 
         event(new Registered($user));

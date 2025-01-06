@@ -1,7 +1,12 @@
+@php
+    $isCartEmpty = count($carts) > 0 ? true : false ;
+@endphp
+
+
 <header class="bg-white sticky top-0 inset-x-0 border-b shadow-sm z-10">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <div class="flex items-center">
-            <img alt="Selera Panca Logo" class="h-20 rounded-xl" src="{{ asset('images/Logo RM. Selera Panca.png') }}" />
+            <img alt="Selera Panca Logo" class="h-14 rounded-xl" src="{{ asset('images/Logo RM. Selera Panca.png') }}" />
         </div>
         <div class="flex items-center gap-x-4">
             @auth
@@ -25,8 +30,8 @@
                 Register
             </a>
             @endguest
-            <button type="button" class="flex shrink-0 justify-center items-center gap-2 size-[38px] text-sm font-medium rounded-lg border hover:bg-gray-100 focus:bg-gray-100" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-cart" data-hs-overlay="#modal-cart">
-                <i class="ri-shopping-basket-line ri-lg"></i>
+            <button type="button" @class(['flex','shrink-0','justify-center','items-center','gap-2','size-[38px]','text-sm','font-medium','rounded-lg','border', 'border-green-700' => $isCartEmpty, 'hover:bg-gray-100','focus:bg-gray-100']) aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-cart" data-hs-overlay="#modal-cart">
+                <i @class(['ri-shopping-basket-line', 'ri-lg', 'text-green-700' => $isCartEmpty])></i>
             </button>
         </div>
     </div>
@@ -80,7 +85,7 @@
                             </div>
                         </div>
                         <p>{{ $item->name }}</p>
-                        <p class="ml-auto">{{ Number::format($item->total) }}</p>
+                        <p class="ml-auto">{{ number_format($item->total) }}</p>
                     </li>
                     @endforeach
                     @else
@@ -97,7 +102,7 @@
             <div class="bg-gray-50 py-3 px-4 border-t">
                 <div class="flex justify-between mb-4">
                     <h3 class="font-medium">Total Harga</h3>
-                    <p class="font-medium">Rp{{ $total_price }}</p>
+                    <p class="font-medium">Rp {{ number_format($total) }}</p>
                 </div>
                 <a class="block py-2 px-3 w-full text-sm text-center font-medium rounded border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="/checkout">Pesan</a>
             </div>
