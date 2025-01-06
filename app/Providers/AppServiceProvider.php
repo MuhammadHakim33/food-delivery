@@ -25,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('order-user', function (User $user, Order $order) {
             return $user->id === $order->user_id;
         });
+
+        \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::except([
+            'verify-payment'
+        ]);
     }
 }

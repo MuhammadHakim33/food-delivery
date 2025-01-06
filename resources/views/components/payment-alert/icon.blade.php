@@ -1,0 +1,1 @@
+<div class="shrink-0">{{ $slot }}</div>

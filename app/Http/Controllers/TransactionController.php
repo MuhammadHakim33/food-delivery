@@ -85,7 +85,6 @@ class TransactionController extends Controller
                     'order_id' => $order->id,
                     'gross_amount' => $total,
                 ],
-                'items' =>  $items,
                 'customer_details' => [
                     'first_name' => auth()->user()->name,
                     'email' => auth()->user()->email,
@@ -106,15 +105,8 @@ class TransactionController extends Controller
         }
         
         $this->cart->destroy();
-
-        return redirect('payment/'.$snapToken->token);
-    }
-
-    public function payment(Order $order)
-    {
-        Gate::authorize('order-user', $order);
-
-        return view('user.transaction.payment', ['order' => $order]);
+        
+        return redirect('order/'.$order->id);
     }
 
     public function show(Order $order)
@@ -122,23 +114,5 @@ class TransactionController extends Controller
         Gate::authorize('order-user', $order);
 
         return view('user.transaction.detail', ['order' => $order ]);
-    }
-
-    public function approve(Order $order)
-    {
-        Gate::authorize('order-user', $order);
-        
-        $order->status = 'success';
-        $order->save();
-        return true;
-    }
-
-    public function failed(Order $order)
-    {
-        Gate::authorize('order-user', $order);
-
-        $order->status = 'failed';
-        $order->save();
-        return true;
     }
 }

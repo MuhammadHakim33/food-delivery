@@ -1,0 +1,1 @@
+<button type="button" id="pay-button" {{ $attributes->merge(['class' => 'py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none']) }}>{{ $slot }}</button>

@@ -17,6 +17,8 @@ class ItemOrder extends Model
         'updated_at',
     ];
 
+    protected $with = ['menu', 'order'];
+
     public function menu()
     {
         return $this->belongsTo(Menu::class);
