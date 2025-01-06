@@ -151,10 +151,30 @@
                 <td>{{$order->user->name}}</td>
                 <td><span class="status waiting">{{$order->delivery->status}}</span></td>
                 <td class="action">
-                  <button class="btn-process" onclick="updateStatus(this, 'processed')">Proses</button>
-                  <button class="btn-ship" onclick="updateStatus(this, 'shipped')">Kirim</button>
-                  <button class="btn-complete" onclick="updateStatus(this, 'completed')">Selesai</button>
-                  <button class="btn-reject" onclick="updateStatus(this, 'rejected')">Tolak</button>
+                  <form method="POST" action="/admin/pesanan/update/{{$order->id}}">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" value="process" name="status" readonly hidden>
+                    <button type="submit" class="btn-process">Proses</button>
+                  </form>
+                  <form method="POST" action="/admin/pesanan/update/{{$order->id}}">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" value="shipped" name="status" readonly hidden>
+                    <button type="submit" class="btn-ship">Kirim</button>
+                  </form>
+                  <form method="POST" action="/admin/pesanan/update/{{$order->id}}">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" value="delivered" name="status" readonly hidden>
+                    <button type="submit" class="btn-complete">Selesai</button>
+                  </form>
+                  <form method="POST" action="/admin/pesanan/update/{{$order->id}}">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" value="failed" name="status" readonly hidden>
+                    <button type="submit" class="btn-reject">Tolak</button>
+                  </form>
                 </td>
               </tr>
               @endforeach

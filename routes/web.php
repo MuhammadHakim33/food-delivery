@@ -25,11 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/{order}', [TransactionController::class, 'show']);
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 // Admin
 // Route::controller(AuthController::class)->group(function () {
 //     Route::middleware('auth:admin')->group(function () {
@@ -48,6 +48,7 @@ Route::post('/admin/login', [AdminController::class, 'login'])->name('loginAdmin
 Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
 Route::get('/admin/menu', [AdminController::class, 'ManajemenMenu'])->name('admin.menu');
 Route::get('/admin/pesanan', [AdminController::class, 'ManajemenPesanan'])->name('admin.pesanan');
+Route::put('/admin/pesanan/update/{order}', [AdminController::class, 'changeStatus']);
 Route::get('/admin/pengguna', [AdminController::class, 'ManajemenPengguna'])->name('admin.pengguna');
 Route::get('/admin/info', [AdminController::class, 'Informasi'])->name('admin.info');
 Route::get('/admin/register', [AdminController::class, 'showRegistrationFormAdmin'])->name('registerAdmin');

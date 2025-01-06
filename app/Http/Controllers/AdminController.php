@@ -94,6 +94,13 @@ class AdminController extends Controller
         return view('admin.pesanan', ['orders' => $orders]);
     }
 
+    public function changeStatus(Order $order, Request $request)
+    {
+        $order->delivery->status = $request->status;
+        $order->push();
+        return redirect()->back();
+    }
+
     public function logout()
     {
         return redirect()->route('loginAdmin');
