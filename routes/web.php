@@ -63,6 +63,8 @@ Route::middleware(Admin::class)->group(function () {
     Route::get('/admin/menu', [AdminController::class, 'ManajemenMenu'])->name('admin.menu');
     Route::delete('/admin/menu', [AdminController::class, 'HapusMenu']);
     Route::get('/admin/pesanan', [AdminController::class, 'AdminDashboard'])->name('admin.pesanan');
+    Route::get('/admin/addMenu', [AdminController::class, 'TambahMenu'])->name('admin.addMenu');
+    Route::get('/admin/editMenu', [AdminController::class, 'EditMenu'])->name('admin.editMenu');
 });
 
 
