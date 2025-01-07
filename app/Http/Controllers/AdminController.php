@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Menu;
-use App\Models\Order;
 
 // use Illuminate\Support\Facades\Session;
 
@@ -68,6 +67,28 @@ class AdminController extends Controller
         return view('admin.register');
     }
 
+    public function register(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'email_regis' => 'required|email',
+            'password_regis' => 'required|min:6',
+            'no_telp' => 'required',
+            'nama' => 'required',
+        ]);
+
+        $user = new User;
+        $user->email = $request->input('email_regis');
+        $user->password = bcrypt($request->input('password_regis'));
+        $user->phone = $request->input('no_telp');
+        $user->name = $request->input('nama');
+        $user->role = 'admin';
+        $user->save();
+
+        // Jika gagal, kembali ke halaman login dengan error
+        return redirect()->route('showLoginFormAdmin');
+    }
+
     public function AdminDashboard()
     {
         return view('admin.dashboard');
@@ -111,8 +132,22 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function logout()
+    public function HapusMenu(Request $request)
     {
+        $id = $request->id;
+        $menu = Menu::find($id);
+        $menu->delete();
+        return redirect()->back();
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
         return redirect()->route('loginAdmin');
     }
 }

@@ -1,5 +1,5 @@
 @php
-    $isCartEmpty = count($carts) > 0 ? true : false ;
+$isCartEmpty = count($carts) > 0 ? true : false ;
 @endphp
 
 
@@ -10,6 +10,7 @@
         </div>
         <div class="flex items-center gap-x-4">
             @auth
+            @if (Auth::user()->role == 'user')
             <div class="hs-dropdown relative inline-flex">
                 <button id="hs-dropdown-unstyled" type="button" class="text-sm py-2 px-3 hs-dropdown-toggle inline-flex justify-center items-center gap-x-2 border border-gray-200 text-gray-500 hover:border-blue-600 hover:text-blue-600 focus:outline-none focus:border-blue-600 focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none" aria-expanded="false" aria-label="Menu">
                     {{Auth::user()->name}}
@@ -21,6 +22,7 @@
                     </form>
                 </div>
             </div>
+            @endif
             @endauth
             @guest
             <a href="{{ route('login') }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-transparent disabled:pointer-events-none hover:bg-gray-100 focus:bg-gray-100">
@@ -30,8 +32,8 @@
                 Register
             </a>
             @endguest
-            <button type="button" @class(['flex','shrink-0','justify-center','items-center','gap-2','size-[38px]','text-sm','font-medium','rounded-lg','border', 'border-green-700' => $isCartEmpty, 'hover:bg-gray-100','focus:bg-gray-100']) aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-cart" data-hs-overlay="#modal-cart">
-                <i @class(['ri-shopping-basket-line', 'ri-lg', 'text-green-700' => $isCartEmpty])></i>
+            <button type="button" @class(['flex','shrink-0','justify-center','items-center','gap-2','size-[38px]','text-sm','font-medium','rounded-lg','border', 'border-green-700'=> $isCartEmpty, 'hover:bg-gray-100','focus:bg-gray-100']) aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-cart" data-hs-overlay="#modal-cart">
+                <i @class(['ri-shopping-basket-line', 'ri-lg' , 'text-green-700'=> $isCartEmpty])></i>
             </button>
         </div>
     </div>

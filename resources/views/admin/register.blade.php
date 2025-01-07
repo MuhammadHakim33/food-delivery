@@ -17,7 +17,7 @@
     </div>
 
     <!-- Formulir Pendaftaran -->
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('admin.register') }}">
       @csrf
       <!-- Nama -->
       <div class="mb-4">

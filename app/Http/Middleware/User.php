@@ -14,6 +14,6 @@ class User
         }
 
         // Redirect jika bukan user
-        return redirect('/')->withErrors(['access' => 'Unauthorized access.']);
+        abort(401, 'Unauthorized access.');
     }
 }

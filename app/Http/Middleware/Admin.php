@@ -14,6 +14,7 @@ class Admin
         }
 
         // Redirect jika bukan admin
-        return redirect('/')->withErrors(['access' => 'Unauthorized access.']);
+        // return redirect('/admin/login')->withErrors(['access' => 'Unauthorized access.']);
+        abort(401, 'Unauthorized access.');
     }
 }
