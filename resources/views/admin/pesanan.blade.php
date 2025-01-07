@@ -135,7 +135,7 @@
       <h2 class="text-gray-700 text-3xl font-medium font-bold">Manajemen Pesanan</h2>
       {{-- <div class="header">
       </div> --}}
-      <div class="table-container">
+      <div class="table-container mt-8">
         <table>
           <thead>
             <tr>

@@ -93,6 +93,11 @@ class AdminController extends Controller
         return view('admin.addMenu');
     }
 
+    public function EditMenu()
+    {
+        return view('admin.editMenu');
+    }
+
     public function ManajemenPesanan()
     {
         $orders = Order::with('user', 'delivery')->get();

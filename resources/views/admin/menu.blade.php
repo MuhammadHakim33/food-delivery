@@ -36,7 +36,7 @@
 
                             <!-- Kolom Aksi -->
                             <td class="px-4 py-2 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                <a href="{{url('/admin/editMenu')}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                             </td>
                         </tr>
                         @endforeach
@@ -61,7 +61,7 @@
 
                             <!-- Kolom Edit -->
                             <td class="px-4 py-2 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                <a href="{{url('/admin/editMenu')}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                             </td>
                         </tr>
                         @endforeach

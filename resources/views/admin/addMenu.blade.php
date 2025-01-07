@@ -111,7 +111,7 @@
           <h2 class="text-gray-700 text-3xl font-medium font-bold">Tambah Menu</h2>
         {{-- <div class="header">
         </div> --}}
-        <div class="table-container">
+        <div class="table-container mt-8">
         <form action="/admin/addMenu" method="POST" enctype="multipart/form-data">
           <!-- CSRF Token -->
           <input type="hidden" name="_token" value="{{ csrf_token() }}">

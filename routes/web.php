@@ -48,6 +48,7 @@ Route::post('/admin/login', [AdminController::class, 'login'])->name('loginAdmin
 Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
 Route::get('/admin/menu', [AdminController::class, 'ManajemenMenu'])->name('admin.menu');
 Route::get('/admin/addMenu', [AdminController::class, 'TambahMenu'])->name('admin.addMenu');
+Route::get('/admin/editMenu', [AdminController::class, 'EditMenu'])->name('admin.editMenu');
 Route::get('/admin/pesanan', [AdminController::class, 'ManajemenPesanan'])->name('admin.pesanan');
 Route::put('/admin/pesanan/update/{order}', [AdminController::class, 'changeStatus']);
 Route::get('/admin/pengguna', [AdminController::class, 'ManajemenPengguna'])->name('admin.pengguna');
